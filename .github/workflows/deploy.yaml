@@ -1,4 +1,4 @@
-name: Deploy HTML to GitHub Pages
+name: CI/CD for Hello World HTML
 
 on:
   push:
@@ -13,23 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          node-version: '14'
+          python-version: '3.x'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build and Deploy
+      - name: Start Local Server
         run: |
-          mkdir -p public
-          cp helloworld.html public/
-          npm install -g http-server
-          http-server public
+          python -m http.server 8000 &
+          sleep 5
+          curl -I http://localhost:8000/index.html
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.HTML_HELLO_WORLD }}
-          publish_dir: ./public
+      - name: Deploy
+        run: echo "Deployed locally on http://localhost:8000"
