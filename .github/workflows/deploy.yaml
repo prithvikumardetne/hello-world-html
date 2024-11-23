@@ -22,7 +22,7 @@ jobs:
         run: |
           python -m http.server 8000 &
           sleep 5
-          curl -I http://localhost:8000/index.html
+          curl -I http://localhost:8000/helloworld.html
 
       - name: Deploy
         run: echo "Deployed locally on http://localhost:8000"
